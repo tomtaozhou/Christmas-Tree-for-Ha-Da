@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>祝小哈圣诞节快乐</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+      }
+
+      #main {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      #video1 {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+      }
+
+      #message {
+        display: none;
+        position: absolute;
+        color: white;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        font-size: 2.5em;
+        z-index: 2;
+        font-family: 'Times New Roman', Times, serif;
+      }
+
+      /* 中文字体样式 */
+      #message.chinese {
+        font-family: 'KaiTi', 'STKaiti', '华文楷体', '楷体', serif;
+      }
+
+      /* 信件页面样式 */
+      #letterPage {
+        display: none;
+        position: fixed;
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 70%;
+        background-color: white;
+        padding: 30px;
+        border: 1px solid #c8bfa0;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        font-size: 1.2em;
+        font-family: 'Georgia', serif;
+        color: #333;
+        line-height: 1.8;
+        position: relative;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+        background-image: url('https://www.publicdomainpictures.net/pictures/10000/nahled/aged-paper-texture-1529205165D2G.jpg');
+        background-size: cover;
+      }
+
+      #letterPage h2 {
+        font-size: 1.5em; /* 使标题大小与正文一致 */
+        text-align: left;
+        color: #333; /* 使标题颜色与正文一致 */
+        margin-bottom: 20px;
+        font-weight: normal; /* 不需要加粗 */
+      }
+
+      #letterPage p {
+        margin: 20px 0;
+        text-align: left; /* 保持正文左对齐 */
+      }
+
+      /* 收起按钮 */
+      #closeButton {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        background-color: transparent;
+        color: #6a4f1d;
+        font-size: 1.5em;
+        cursor: pointer;
+        border: none;
+        padding: 5px;
+        transition: color 0.3s;
+      }
+
+      #closeButton:hover {
+        color: #4f3b28;
+      }
+
+      /* 按钮样式 */
+      #letterButton {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: transparent;
+        border: none;
+        font-size: 2em;
+        color: #6a4f1d;
+        cursor: pointer;
+        text-decoration: none;
+        padding: 5px;
+        transition: color 0.3s;
+      }
+
+      #letterButton:hover {
+        color: #4f3b28;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div id="main">
+      <video
+        id="video1"
+        muted="muted"
+        autoplay="autoplay"
+        loop="loop"
+        src="http://hada.fedipod.com/wp-content/uploads/2024/12/20241225_HaDa.mp4"
+      ></video>
+
+      <div id="message">🎄 Merry Christmas, Ha Da! 🎅</div>
+    </div>
+
+    <!-- 信件页面 -->
+    <div id="letterPage">
+      <h2>亲爱的哈达：</h2>
+      <p>见字如面，展信安好。</p>
+      <p>这是我精心为你准备的圣诞节礼物，请查收。</p>
+      <p>自从认识你以来，这是我们共同度过的第一个圣诞节。转眼间，元旦、初雪、春节等美好时光也会如期而至。每一次和你聊天，我都感到非常开心。你美丽、聪明、善良、又充满趣味。你的画画才艺出众，做的饭菜也让人垂涎。西施的技巧也不容小觑，有点意思，这是否就是西施本人呢？</p>
+      <p>新的一年即将到来，愿你所愿皆成真，好运不断，身体健康，心情愉快，每一天都充满欢笑。</p>
+
+      <p>祝你</p>
+      <p>圣诞节快乐！</p>
+      <p style="text-align: right;">彼端</p>
+      <p style="text-align: right;">2024年12月25日</p>
+
+      <button onclick="closeLetter()">收起信件</button> <!-- 收起按钮 -->
+    </div>
+
+    <script>
+      // 祝福语数组
+      const messages = [
+        { text: '祝哈达圣诞节快乐! 🎁', isChinese: true, isJapanese: false },
+        { text: 'Merry Christmas, Ha Da! 🎉', isChinese: false, isJapanese: false },
+        { text: 'Happy Christmas, Ha Da! 🌟', isChinese: false, isJapanese: false },
+        { text: 'Joyeux Noël, Ha Da! 🎂', isChinese: false, isJapanese: false },
+        { text: 'メリークリスマス、ハダさん! 🍬', isChinese: false, isJapanese: true },
+        { text: 'Frohe Weihnachten, Ha Da! 🎈', isChinese: false, isJapanese: false },
+        { text: 'Feliz Navidad, Ha Da! 🎶', isChinese: false, isJapanese: false },
+        { text: 'Buon Natale, Ha Da! 🎄', isChinese: false, isJapanese: false },
+        { text: 'Gleðileg jól, Ha Da! 🌠', isChinese: false, isJapanese: false },
+        { text: 'Veselé Vánoce, Ha Da! 🎅', isChinese: false, isJapanese: false },
+        { text: 'Zorionak, Ha Da! 🎁', isChinese: false, isJapanese: false },
+        { text: 'God Jul, Ha Da! ✨', isChinese: false, isJapanese: false },
+        { text: 'Mele Kalikimaka, Ha Da! 🎉', isChinese: false, isJapanese: false },
+        { text: 'Kala Christougenna, Ha Da! 🌟', isChinese: false, isJapanese: false },
+        { text: 'Wesolych Swiat, Ha Da! 🎂', isChinese: false, isJapanese: false },
+        { text: 'Kala Christougenna, Ha Da! 🎀', isChinese: false, isJapanese: false },
+        { text: 'Nollaig Shona, Ha Da! 🌲', isChinese: false, isJapanese: false },
+        { text: 'Veselé Vánoce, Ha Da! 💫', isChinese: false, isJapanese: false },
+        { text: 'С Рождеством, Ha Da! 🎉', isChinese: true, isJapanese: false },
+        { text: 'Selamat Hari Natal, Ha Da! 🎊', isChinese: false, isJapanese: false },
+        { text: '圣诞节快乐，哈达! 🌟', isChinese: true, isJapanese: false },
+      ];
+
+      // 控制消息显示
+      const messageDiv = document.getElementById("message");
+
+      // 随机生成祝福语
+      function showMessage(message) {
+        messageDiv.textContent = message.text;
+
+        // 设置中文字体样式
+        if (message.isChinese) {
+          messageDiv.classList.add("chinese");
+        } else {
+          messageDiv.classList.remove("chinese");
+        }
+
+        // 设置日语字体样式
+        if (message.isJapanese) {
+          messageDiv.classList.add("japanese");
+        } else {
+          messageDiv.classList.remove("japanese");
+        }
+
+        // 随机生成位置
+        const randomTop = Math.random() * 80 + '%';  // 随机位置
+        const randomLeft = Math.random() * 80 + '%'; // 随机位置
+        messageDiv.style.top = randomTop;
+        messageDiv.style.left = randomLeft;
+
+        // 显示祝福语
+        messageDiv.style.display = "block";
+        setTimeout(() => {
+          messageDiv.style.display = "none";
+        }, 8000); // 延长停留时间到8秒
+      }
+
+      // 监听点击事件
+      document.body.onclick = function () {
+        // 随机选择祝福语
+        const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+        showMessage(randomMessage);
+      };
+
+      // 打开信件页面
+      function openLetter() {
+        document.getElementById("letterPage").style.display = "block";
+      }
+
+      // 关闭信件页面
+      function closeLetter() {
+        document.getElementById("letterPage").style.display = "none";
+      }
+    </script>
+
+    <!-- 信件按钮 -->
+    <button id="letterButton" onclick="openLetter()">📜</button>
+  </body>
+</html>
